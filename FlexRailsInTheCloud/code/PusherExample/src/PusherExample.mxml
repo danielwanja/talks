@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600"
+			   applicationComplete="application1_applicationCompleteHandler(event)">
+	<fx:Script>
+		<![CDATA[
+			import com.pusher.Pusher;
+			import com.pusher.PusherConstants;
+			import com.pusher.channel.Channel;
+			
+			import mx.controls.Alert;
+			import mx.events.FlexEvent;
+			import mx.utils.ObjectUtil;
+			private var pusher:Pusher;
+			private var channel:Channel;
+			protected function application1_applicationCompleteHandler(event:FlexEvent):void
+			{
+				Pusher.enableWebSocketLogging = true;
+				Pusher.log = function(msg:String):void {trace(msg)};
+				//pusher = new Pusher('a0b74120a5c8dd2da432', "pusherexample" );
+				pusher = new Pusher('f834b1edc877f06be123', "pusherexample" );
+				
+				channel = pusher.subscribe('test_channel');
+				channel.bind('greet', gotData);
+			}
+
+			protected function gotData(data:Object):void {
+				trace(ObjectUtil.toString(data));
+				Alert.show(ObjectUtil.toString(data));
+			}
+
+			protected function button1_clickHandler(event:MouseEvent):void
+			{
+				// channel.trigger('greet', {greeting: message.text});  <-- basic channel doesn't support this yet...
+				pusher.sendEvent(PusherConstants.CLIENT_EVENT_NAME_PREFIX + 'greet', {greeting: message.text});
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:HGroup>
+		<s:TextInput id="message" text="Hey Back!" />
+		<s:Button label="send" click="button1_clickHandler(event)" />		
+	</s:HGroup>
+	
+</s:Application>
