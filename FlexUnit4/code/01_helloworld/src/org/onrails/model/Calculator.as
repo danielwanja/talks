@@ -2,13 +2,22 @@ package org.onrails.model
 {
 	public class Calculator
 	{
-		
-		public function add(a:Number, b:Number):Number {
-			return a+b;
+		protected var total:Number = 0;;
+		public function set(value:Number):void {
+			total = value;
 		}
 		
-		public function remove(a:Number, b:Number):Number {
-			return a-b;
+		public function add(value:Number):Number {
+			return total=total+value;
+		}
+		
+		public function remove(value:Number):Number {
+			return total=total-value;
+		}
+		
+		public function divide(value:Number):Number {
+			if (value==0) throw new TypeError("Cannot divide by Zero");
+			return total=total/value;
 		}
 	}
 }

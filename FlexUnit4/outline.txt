@@ -1,0 +1,10 @@
+FlexUnit 4
+
+In this presentation I will show the features of FlexUnit 4 that enable you to do test units for your Flex project.
+
+Historically FlexUnit 4 was born from the collaboration of Michael Labriola and the Flex development team. Original FlexUnit 1 wasn’t the most appropriate testing framework as it was lacking support in areas such a asynchronous and event based code testing. So Michael created an alternative testing framework, Fluint, which was way nicer to test Flex applications. And FlexUnit 4 inherit many things from Fluint.
+
+ABC of FlexUnit 4
+TestCase
+TestSuite
+Testing components
