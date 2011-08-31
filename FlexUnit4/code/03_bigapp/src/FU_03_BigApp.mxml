@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Displaying data from http://www.senate.gov/legislative/LIS_MEMBER/cvc_member_data.xml
+
+  Pin-point area that cannot be tested
+  1. One big app, so split to mvc
+  2. Show testing without using a server (use fixtures)
+  3. Move selected item to model
+  4. Move filtering to model
+  5. Move label functions to helper classes
+-->
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600"
+			   applicationComplete="setup(event)"
+>
+	<s:layout>
+		<s:VerticalLayout />
+	</s:layout>
+	<fx:Declarations>
+		<s:HTTPService id="memberList" url="cvc_member_data.xml"  resultFormat="e4x"
+					   result="memberList_resultHandler(event)"
+					   fault="memberList_faultHandler(event)"/>
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ListCollectionView;
+			import mx.collections.XMLListCollection;
+			import mx.controls.Alert;
+			import mx.events.FlexEvent;
+			import mx.rpc.events.FaultEvent;
+			import mx.rpc.events.ResultEvent;
+			
+			import spark.events.TextOperationEvent;
+			
+			[Bindable] public var list:ListCollectionView;
+			
+			protected function setup(event:FlexEvent):void
+			{
+				memberList.send();
+			}
+			
+			protected function memberList_resultHandler(event:ResultEvent):void
+			{
+				list = new XMLListCollection(event.result.senator);
+				list.filterFunction = filterByState;
+				list.refresh();
+			}
+			protected function filterByState(item:Object):Boolean {
+				return stateField.text == "" || item.state.toString() == stateField.text;
+			}
+
+			protected function memberList_faultHandler(event:FaultEvent):void
+			{
+				Alert.show("Failed to load list");
+			}			
+			protected function senatorLabelFunction(item:Object, column:GridColumn):String {
+				return item.name.first+" "+item.name.last	
+			}
+			protected function committeeName(item:Object, column:GridColumn):String {
+				return item.toString();
+			}
+			
+
+			
+			protected function stateFilterChanged(event:TextOperationEvent):void
+			{
+				list.refresh();
+			}
+			
+			
+		]]>
+	</fx:Script>
+	<s:Form>
+		<s:FormItem label="Filter By State">
+			<s:TextInput id="stateField" change="stateFilterChanged(event)"/>
+		</s:FormItem>		
+	</s:Form>
+
+	<s:DataGrid id="memberGrid" requestedRowCount="4" width="100%" height="50%" dataProvider="{list}">
+		<s:columns>
+			<s:ArrayList>
+				<s:GridColumn dataField="name" headerText="Name" labelFunction="senatorLabelFunction"></s:GridColumn>
+				<s:GridColumn dataField="homeTown" headerText="Home Town"></s:GridColumn>
+				<s:GridColumn dataField="state" headerText="State"></s:GridColumn>
+				<s:GridColumn dataField="stateRank" headerText="State Rank"></s:GridColumn>
+				<s:GridColumn dataField="party" headerText="Party"></s:GridColumn>
+			</s:ArrayList>
+		</s:columns>
+	</s:DataGrid>
+	<s:Form width="100%" height="50%">
+		<s:FormItem label="Commitees" width="100%" height="100%">
+			<s:DataGrid width="100%" height="100%" 
+						dataProvider="{new XMLListCollection(memberGrid.selectedItem.committees.committee)}">
+				<s:columns>
+					<s:ArrayList>
+						<s:GridColumn  headerText="Name" labelFunction="committeeName"></s:GridColumn>
+						<s:GridColumn dataField="@position" headerText="Position"></s:GridColumn>
+					</s:ArrayList>
+				</s:columns>
+			</s:DataGrid>
+		</s:FormItem>
+	</s:Form>
+	
+</s:Application>

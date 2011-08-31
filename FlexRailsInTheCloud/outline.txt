@@ -1,0 +1,14 @@
+Flex and  Ruby on Rails
+
+	one resource
+	nested resource 
+	nested attribute
+
+
+	continue diagrams on paper
+		the one with the db  (browser->rails->db)
+		the ones with MongoDb, Redis, Memcache?
+
+	remove "dust" from rails examples I have
+	
+	start real graphics (learn Keynote, OmniGraffle)

@@ -4,7 +4,42 @@ In this presentation I will show the features of FlexUnit 4 that enable you to d
 
 Historically FlexUnit 4 was born from the collaboration of Michael Labriola and the Flex development team. Original FlexUnit 1 wasn’t the most appropriate testing framework as it was lacking support in areas such a asynchronous and event based code testing. So Michael created an alternative testing framework, Fluint, which was way nicer to test Flex applications. And FlexUnit 4 inherit many things from Fluint.
 
-ABC of FlexUnit 4
-TestCase
-TestSuite
-Testing components
+Demos:
+
+01. FU_01_helloworld
+   select Calculator and create a test case
+   show meta data
+   add a first test
+
+02. FU_03_weather
+  shows how to test an HTTPRequest
+  shows that it’s not predictable…hey, the weather changes
+  what to do to test http errors, hey google doesn’t fail often
+  using mocks
+  change the design for testability
+
+03. Validator Component or Login form
+  test “Login” button is disabled by default
+  test validation error when confirmation password is not right
+  test validation error when password is too short
+
+04. Big App
+  show that it cannot be tested
+  move filtering into model
+  move selected item into model
+
+Todo
+	continue example code…make Mocks work
+	create a LoginForm and test it
+
+Things to cover:
+Exception handling:
+Async:
+	- asyncResponder
+	- asyncHandler
+	- handleEvent
+Hamcrest
+Parameterized Testing via Method
+
+
+

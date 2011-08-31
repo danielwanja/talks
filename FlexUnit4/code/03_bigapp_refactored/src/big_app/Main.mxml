@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="300">
+	<s:layout>
+		<s:VerticalLayout/>
+	</s:layout>
+	<fx:Script>
+		<![CDATA[
+			import spark.events.TextOperationEvent;
+			
+			[Bindable] public var model:Model;
+			public var services:ServiceLocator;
+			public var controller:Controller 
+			
+			// Use injection instead (i.e. Swiz)
+			public function setup():void {
+				model = new Model()
+				services = new ServiceLocator();
+				services.setup();
+				controller =  new Controller(model, services);
+				controller.loadSenators();
+			}
+			
+			protected function stateFilterChanged(event:TextOperationEvent):void
+			{
+				model.stateFilter = stateField.text;
+			}
+			
+			
+		]]>
+	</fx:Script>
+	<s:Form>
+		<s:FormItem label="Filter By State">
+			<s:TextInput id="stateField" change="stateFilterChanged(event)"/>
+		</s:FormItem>		
+	</s:Form>
+	
+	<s:DataGrid id="memberGrid" requestedRowCount="4" width="100%" height="50%" dataProvider="{model.list}"
+			     selectionChange="model.selectedSenator = memberGrid.selectedItem as XML">
+		<s:columns>
+			<s:ArrayList>
+				<s:GridColumn dataField="name" headerText="Name" labelFunction="MainHelper.senatorLabelFunction"></s:GridColumn>
+				<s:GridColumn dataField="homeTown" headerText="Home Town"></s:GridColumn>
+				<s:GridColumn dataField="state" headerText="State"></s:GridColumn>
+				<s:GridColumn dataField="stateRank" headerText="State Rank"></s:GridColumn>
+				<s:GridColumn dataField="party" headerText="Party"></s:GridColumn>
+			</s:ArrayList>
+		</s:columns>
+	</s:DataGrid>
+	<s:Form width="100%" height="50%">
+		<s:FormItem label="Commitees" width="100%" height="100%">
+			<s:DataGrid width="100%" height="100%" 
+						dataProvider="{model.committees}">
+				<s:columns>
+					<s:ArrayList>
+						<s:GridColumn  headerText="Name" labelFunction="MainHelper.committeeName"></s:GridColumn>
+						<s:GridColumn dataField="@position" headerText="Position"></s:GridColumn>
+					</s:ArrayList>
+				</s:columns>
+			</s:DataGrid>
+		</s:FormItem>
+	</s:Form>
+</s:Group>

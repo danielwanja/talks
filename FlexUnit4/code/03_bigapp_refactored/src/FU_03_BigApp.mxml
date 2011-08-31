@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Displaying data from http://www.senate.gov/legislative/LIS_MEMBER/cvc_member_data.xml
+
+  Test
+   HttpService (test Mock?)
+	move out to controller
+	mock service (see http://mockolate.org/)
+-->
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600"
+			   applicationComplete="main.setup()" 
+			   xmlns:local="*" xmlns:ns="big_app.*"
+>
+	<ns:Main id="main" width="100%" height="100%" />
+</s:Application>
