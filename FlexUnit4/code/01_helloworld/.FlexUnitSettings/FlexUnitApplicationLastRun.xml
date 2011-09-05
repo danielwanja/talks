@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testrun name="" >
 <testsuite  name="Default Test Suite" project="FU_01_HelloWorld">
-<testsuite name="test:CalculatorTest" type="testsuiteclass"/>
+<testsuite name="test:CalculatorTest" type="testcaseclass">
+<testcase name="testDivideByZeroShouldThrowException" classname="test:CalculatorTest"/>
+</testsuite>
 </testsuite>
 </testrun>
