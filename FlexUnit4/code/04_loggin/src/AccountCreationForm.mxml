@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		  xmlns:s="library://ns.adobe.com/flex/spark" 
+		  xmlns:mx="library://ns.adobe.com/flex/mx" width="578" height="300">
+	<fx:Script>
+		<![CDATA[
+			import mx.logging.Log;
+			import mx.utils.StringUtil;
+			
+			import spark.events.TextOperationEvent;
+			
+			[Bindable] public var isValid:Boolean = false;
+			
+			protected function username_changeHandler(event:TextOperationEvent):void
+			{
+				username.errorString = StringUtil.trim(username.text)!= "" ? "" : "Username cannot be blank.";
+				validate();
+			}
+			
+			protected function password_changeHandler(event:TextOperationEvent):void
+			{
+				confirmation.errorString = confirmation.text == password.text ? "" : "Password must match confirmation.";
+				password.errorString = StringUtil.trim(password.text)!= "" ? "" : "Password cannot be blank.";
+				validate();
+			}
+			
+			// Use validators instead.
+			protected function validate():void {
+				isValid = StringUtil.trim(username.text)!= ""
+					&& StringUtil.trim(password.text)!= ""
+					&& confirmation.text == password.text;
+			}
+			
+			protected function create_clickHandler(event:MouseEvent):void
+			{
+				dispatchEvent(new CreateAccountEvent(CreateAccountEvent.CREATE, username.text, password.text));
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:Form width="475">
+		<s:FormItem label="Username">
+			<s:TextInput id="username" width="200" change="username_changeHandler(event)" />
+		</s:FormItem>
+		<s:FormItem label="Password">
+			<s:TextInput id="password" width="200" change="password_changeHandler(event)"/>
+		</s:FormItem>
+		<s:FormItem label="Password Confirmation">
+			<s:TextInput id="confirmation" width="200" change="password_changeHandler(event)"/>
+		</s:FormItem>
+		<s:FormItem>
+			<s:Button id="create" label="Create Account" enabled="{isValid}"
+					  click="create_clickHandler(event)"/>
+		</s:FormItem>
+	</s:Form>
+	
+</s:VGroup>

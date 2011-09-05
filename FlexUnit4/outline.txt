@@ -4,6 +4,26 @@ In this presentation I will show the features of FlexUnit 4 that enable you to d
 
 Historically FlexUnit 4 was born from the collaboration of Michael Labriola and the Flex development team. Original FlexUnit 1 wasn’t the most appropriate testing framework as it was lacking support in areas such a asynchronous and event based code testing. So Michael created an alternative testing framework, Fluint, which was way nicer to test Flex applications. And FlexUnit 4 inherit many things from Fluint.
 
+Writing tests is not fun. Anyone who tells you otherwise is a liar. - Sean Voisen
+
+I disagree and  know many people that really love testing and think it’s fun. So I went out and made a pool, as obviously we didn’t agree… So this scientific pool resulted in : 53% Yes - 47% No
+
+I think Sean’s opinion is reflected in the Flex community, he works at Adobe in the UX group. Same symptoms in the iPhone development community. Not many developers do test driven development, or even write tests. So what’s similar between the Flex and iPhone community and different from the Ruby community.
+
+It’s the UI dummy, visual things, during development the UI goes throughout many variations, changes.
+
+—> Sean’s conclusion
+“But would I use TDD for every project I work on? Probably not. For personal “one-off” projects or projects I know will not see much future maintenance, the slower development time is simply not worth it. For serious, long-term projects however, TDD is now a must.” - Sean Voisen
+
+So what should we do just not test? It’s not fun and it’s hard.
+
+Well… It doesn’t have to be hard, and there are a few things you can do to test your Flex application. FlexUnit 4 made things easier, so let’s start looking at that and then let’s see how we can test Flex applications.
+
+
+
+
+
+
 Demos:
 
 01. FU_01_helloworld
@@ -11,26 +31,24 @@ Demos:
    show meta data
    add a first test
 
-02. FU_03_weather
+02. FU_02_weather
   shows how to test an HTTPRequest
   shows that it’s not predictable…hey, the weather changes
   what to do to test http errors, hey google doesn’t fail often
   using mocks
   change the design for testability
 
-03. Validator Component or Login form
-  test “Login” button is disabled by default
-  test validation error when confirmation password is not right
-  test validation error when password is too short
 
-04. Big App
+03. Big App
   show that it cannot be tested
   move filtering into model
   move selected item into model
 
-Todo
-	continue example code…make Mocks work
-	create a LoginForm and test it
+04.Create Account  form
+  test “Login” button is disabled by default
+  test validation error when confirmation password is not right
+  test validation error when password is too short
+
 
 Things to cover:
 Exception handling:
