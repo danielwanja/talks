@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" 
+			   creationComplete="service.send()">
+	<fx:Declarations>
+		<s:HTTPService id="service"
+					   url="http://localhost:3000/posts.json"
+					   resultFormat="text"
+					   result="service_resultHandler(event)"/>					   
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import com.adobe.serialization.json.JSONDecoder;
+			
+			import mx.collections.ArrayCollection;
+			import mx.rpc.events.ResultEvent;
+			
+			[Bindable] private var list:ArrayCollection;
+			
+			protected function service_resultHandler(event:ResultEvent):void
+			{
+				var jsonData:Array = new JSONDecoder(event.result as String, true).getValue()
+				list = new ArrayCollection(jsonData);				
+			}			
+		]]>
+	</fx:Script>
+	<s:DataGrid width="100%" height="100%" dataProvider="{list}"  />
+</s:Application>
