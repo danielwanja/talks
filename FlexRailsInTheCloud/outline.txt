@@ -1,9 +1,119 @@
 Flex and  Ruby on Rails
 
-	one resource
-	nested resource 
-	nested attribute
+OUTLINE:
 
+Total: 65min
+
+Intro (5 min)
+   me
+   Big tour of Rails and Flex echo system
+   Assuming you know Flex and are interested in getting data from/to the server
+
+Create a Rails app  (3 min)
+   create a Rails application (generate scaffold)
+   $ rails new demo1
+   $ rails generate scaffold post title:string body:text
+   $ rails db:migrate
+   $ rails s
+
+Rails Overview  (3 min)
+   diagram: browser->rails->db
+   demo show the code
+   focus on the controller
+
+Rails Console
+   $ rails c
+   $ post = Post.first
+   $ post.to_xml
+   $ post.to_json
+
+Rails Architecture  (3 min)
+   show architecture of Rails (middle ware)
+   great for web applications
+   great API via REST style of controllers
+
+Flex HttpService  (3 min)
+   show HttpService
+	make one query
+
+Rails Resource (3 min)
+	explain routes
+	one resource
+   show one resource
+   In Flex that makes 5 HttpService instance
+   hence framework (activeresource, RestfulX)
+
+RestfulX
+   show generators  (Not yet working for Rails 3)
+   show Rails
+   show Flex
+
+Rails Nested Resource (3 min)
+   more complex app (order, orderItem or account, setting)
+   * nested resource 
+   show Rails code
+   show example
+   explain why it’s important
+
+Rails Bullk-API
+  Comes from SproutCore (Yhuda Katz) thinking about
+  HTML app interactions with Rails…
+  ..same issue than with Flex
+  He want’s a unified simple API
+
+Rails Nested Attributes (3 min)
+	* nested attribute
+   other approach 
+   show Rails code
+   show example
+
+Ruby and AMF (5 min)
+   binary protocol via Http
+   AMF more familiar to Flex developers  
+   show example codes
+
+Rails your Protector (3 min)
+   show diagram with db
+   great to “protected” the db (no direct access)
+   great to serve other sources
+
+Rails -> Redis (5 min)
+   supper fast key/value store on steroids
+   direct from Flex now wise…but can do (see my gem :-)
+   controlled by Rails 
+   also push capabilities (don’t demo!)
+
+Rails -> MongoDB (5 min)
+   more Flexible (structure less, document oriented)
+   other candidates (CoucheDb, Kyoto Cabinet, ….)
+   show Rails code
+   show Flex leveraging
+
+Rails -> Pusher (5 min)
+   where to use: messaging, notification, fast update (trading)
+   show Rails code
+   how to use from Flex
+
+Rails -> ZipCompress (3 min)
+
+Rails and the cloud (3 min)
+	Many provider 
+   Amazon -> Roll you own
+   Engineyard -> Professional help
+   Heroku -> Take care of tons for you
+   CloudFoundry
+
+Heroku (5 min)
+    Create app
+    Deploy
+    Tada!
+
+Installing Rails (should I show that)
+  OSX: $ gem install rails
+  Windows: RailsInstaller (todo: find link)
+
+
+TODO:
 
 	continue diagrams on paper
 		the one with the db  (browser->rails->db)
