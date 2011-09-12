@@ -10,9 +10,10 @@ I will give this talk at the Denver Flex User Group on September 15th 2011. http
 
 This is an early outline.
 
-### FlexRailsInTheCloud
+### FlexRailsIn
 
-I will give this talk at AdobeMax on October 3rd 2011. This is also an ultra early outline. 
+I will give this talk at the AdobeMax 360 Unconference on Wednesday October 5th 2011. For more information see http://www.360flex.com/about/360max/. This talk was originally scheduled for the Flex track at Adobe Max, but was
+then "promoted" to the 360Flex unconference as the topic is more specialized https://max.adobe.com/schedule/by-session/flex-ruby-on-rails-and-the-cloud/S3441. 
 
 ## Older
 
