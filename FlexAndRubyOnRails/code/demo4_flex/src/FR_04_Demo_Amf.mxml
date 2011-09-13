@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" 
+			   applicationComplete="setup()">
+	<s:layout>
+		<s:VerticalLayout />
+	</s:layout>
+	<fx:Declarations>
+		<s:RemoteObject id="postsController"
+						destination="ruby"
+						source="PostsController"
+						endpoint="http://localhost:3000/amf">
+			<s:method name="index" result="indexResultHandler(event)" fault="faultHandler(event)" />
+			<s:method name="create" result="createResultHandler(event)" fault="faultHandler(event)" />
+			<!-- + update, delete, show, ... -->
+		</s:RemoteObject>
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import model.Post;
+			
+			import mx.collections.ArrayCollection;
+			import mx.rpc.events.FaultEvent;
+			import mx.rpc.events.ResultEvent;
+			
+			[Bindable] public var posts:ArrayCollection;
+			protected function setup():void
+			{
+				postsController.index.send();
+			}
+			
+			protected function indexResultHandler(event:ResultEvent):void
+			{
+				posts = new ArrayCollection(event.result as Array)
+			}
+			
+			protected function faultHandler(event:FaultEvent):void
+			{
+				trace("Fault:"+event);
+			}
+			
+			protected function createResultHandler(event:ResultEvent):void
+			{
+				trace("Created:"+event);
+			}
+			
+			protected function createButton_clickHandler(event:MouseEvent):void
+			{
+				var post:Post = new Post;
+				post.title = "Really want to use AMF?"
+				post.body = "Long descussion....";
+				postsController.create.send({post: post});
+			}			
+			
+		]]>
+	</fx:Script>
+	<s:Button id="createButton" label="Create new Post" click="createButton_clickHandler(event)" />
+	<s:Label text="Posts" />
+	<s:DataGrid id="postGrid" width="100%" height="152" dataProvider="{posts}" />
+	<s:Label text="Comments" />
+	<s:DataGrid width="100%" height="50%" dataProvider="{new ArrayCollection(postGrid.selectedItem.comments)}" />
+	
+</s:Application>
