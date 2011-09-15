@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Trying to imitate the following Sproutcore app: http://getting-started. 
+-->
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:flexlib="http://code.google.com/p/flexlib/"
+			   minWidth="400" minHeight="500"
+			   creationComplete="loadAll()">
+	<fx:Style>
+		@namespace s "library://ns.adobe.com/flex/spark";
+		@namespace flexlib "http://code.google.com/p/flexlib/";
+		
+		s|BorderContainer.todo_entry
+		{
+			backgroundColor: #f0f0f0;
+			cornerRadius: 6;
+			dropShadowVisible: true;
+		}
+		
+		flexlib|PromptingTextInput.todo_entry
+		{
+			fontFamily: Arial;
+			fontSize: 36;
+		}
+		s|BorderContainer.stripe
+		{
+			backgroundColor: #EEEEEE;
+			borderVisible: false;
+		}
+		s|List.todo_list
+		{
+			alternatingItemColors: #FFFFFF, #EEEEEE;
+			borderVisible: false;
+		}
+				
+	</fx:Style>
+	<fx:Script>
+		<![CDATA[
+			import bulk_api.BulkResource;
+			
+			import mx.collections.ArrayCollection;
+			import mx.events.CollectionEvent;
+			import mx.events.CollectionEventKind;
+			import mx.events.PropertyChangeEvent;
+			import mx.rpc.AsyncResponder;
+			import mx.rpc.AsyncToken;
+			import mx.rpc.events.FaultEvent;
+			import mx.rpc.events.ResultEvent;
+			
+			import resources.Todo;
+			
+			//---------------------------------------------
+			// Model
+			//---------------------------------------------
+			[Bindable] protected var todos:ArrayCollection;
+			
+			//---------------------------------------------
+			// Controller
+			//---------------------------------------------
+			
+			protected function loadAll():void {
+				BulkResource.findAll(Todo).addResponder(new AsyncResponder(loadAllResult, faultHandler));
+			}
+			
+			private function loadAllResult(event:ResultEvent, token:Object=null):void
+			{
+				todos = event.result.todos as ArrayCollection || new ArrayCollection();
+				todos.addEventListener(CollectionEvent.COLLECTION_CHANGE, todoChangeEventHandle);
+			}
+			
+			protected function todoChangeEventHandle(event:CollectionEvent):void
+			{
+				if (event.kind!=CollectionEventKind.UPDATE) return;
+				var todos:Array = [];
+				for each (var changeEvent:PropertyChangeEvent in event.items) {
+					todos.push(changeEvent.source);
+				}
+				var call:AsyncToken = BulkResource.update(Todo, {todos:new ArrayCollection(todos)});
+				call.addResponder(new AsyncResponder(todoUpdateResult, faultHandler));
+				remainingLabel.executeBindings();
+			}	
+			
+			private function todoUpdateResult(event:ResultEvent, token:Object=null):void
+			{
+				// FIXME: update local object. For now assuming everything is in sync.
+			}	
+			
+			protected function markAllAsDone():void {
+				if (markAllAsDoneButton.selected) {
+					try {
+						todos.disableAutoUpdate();
+						for each (var todo:Todo in todos) {
+							todo.done = true;
+						}
+					} finally {
+						todos.enableAutoUpdate();
+					}
+					markAllAsDoneButton.selected = false;
+				}
+			}
+			
+			protected function clearCompletedTodos():void {
+				var done:Array = [];
+				for each (var todo:Todo in todos) {
+					if (todo.done) done.push(todo.id);
+				}			
+				var call:AsyncToken = BulkResource.destroy(Todo, {todos:new ArrayCollection(done)});
+				call.addResponder(new AsyncResponder(todoDeleteResult, faultHandler));
+				remainingLabel.executeBindings();
+			}	
+			
+			private function todoDeleteResult(event:ResultEvent, token:Object=null):void
+			{
+				for each (var todo:Todo in todos.source.concat()) {
+					if (todo.done) todos.removeItemAt(todos.getItemIndex(todo));
+				}	
+			}	
+			
+			protected function addTodo():void {
+				var todo:Todo = new Todo({title:newTodo.text, done:false})
+				var call:AsyncToken = BulkResource.create(Todo, {todos:new ArrayCollection([todo])});
+				call.addResponder(new AsyncResponder(addTodoResult, faultHandler));
+			}
+			
+			private function addTodoResult(event:ResultEvent, token:Object=null):void
+			{
+				todos.addItem(event.result.todos.getItemAt(0));
+				newTodo.text = "";
+			}			
+			
+			protected function faultHandler(event:FaultEvent, token:Object=null):void {
+				trace(event); // TODO: add error notification
+			}
+			
+			protected function itemsRemaining(items:ArrayCollection):String {
+				var count:Number=0;
+				for each (var todo:Todo in items) {
+					if (!todo.done) count++;
+				}
+				return count==1 ? "1 item" : count+" items";
+			}
+		]]>
+	</fx:Script>
+	<s:Panel left="120" right="120" top="100" bottom="100" horizontalCenter="0" title="Todos">
+		<s:BorderContainer left="10" right="10" top="10" height="49" styleName="todo_entry">
+			<flexlib:PromptingTextInput id="newTodo" width="100%"
+										keyUp="if (event.keyCode==Keyboard.ENTER) addTodo()"
+										prompt="What needs to be done?" styleName="todo_entry"/>
+		</s:BorderContainer>
+		<s:BorderContainer x="0" y="67" width="100%" height="30" styleName="stripe">
+			<s:Label id="remainingLabel" y="9" left="10" text="{itemsRemaining(todos)} remaining."/>
+			<s:Button y="4.5" right="10" label="Clear Completed Todos" click="clearCompletedTodos()" />
+		</s:BorderContainer>
+		<s:CheckBox id="markAllAsDoneButton" x="10" y="105" label="Mark All as Done" click="markAllAsDone()"/>
+		<s:List left="10" right="10" top="130" bottom="10" dataProvider="{todos}"
+				itemRenderer="TodoItemRenderer" styleName="todo_list"/>
+	</s:Panel>
+</s:Application>

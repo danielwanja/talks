@@ -1,0 +1,28 @@
+/* CSS file */
+@namespace s "library://ns.adobe.com/flex/spark";
+@namespace ns "http://code.google.com/p/flexlib/";
+
+
+s|BorderContainer.todo_entry
+{
+	backgroundColor: #f0f0f0;
+	cornerRadius: 6;
+	dropShadowVisible: true;
+}
+
+ns|PromptingTextInput.todo_entry
+{
+	fontFamily: Arial;
+	fontSize: 36;
+}
+s|BorderContainer.stripe
+{
+	backgroundColor: #EEEEEE;
+	borderVisible: false;
+}
+s|List.todo_list
+{
+	alternatingItemColors: #FFFFFF, #EEEEEE;
+	borderVisible: false;
+}
+	
