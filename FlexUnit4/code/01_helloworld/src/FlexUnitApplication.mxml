@@ -16,7 +16,7 @@
 			{
 				var testsToRun:Array = new Array();
 				
-				testsToRun.push(Request.methods(test.CalculatorTest,["testDivideByZeroShouldThrowException"]));
+				testsToRun.push(Request.methods(test.CalculatorTest,["testRemove"]));
 				return testsToRun;
 			}
 			
