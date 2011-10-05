@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600"
+			   creationComplete="application1_creationCompleteHandler(event)">
+	<fx:Script>
+		<![CDATA[
+			import active_resource.ActiveResource;
+			
+			import model.Post;
+			
+			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
+			import mx.events.FlexEvent;
+			import mx.rpc.AsyncResponder;
+			import mx.rpc.AsyncToken;
+			import mx.rpc.events.FaultEvent;
+			import mx.rpc.events.ResultEvent;
+			
+			[Bindable] public var posts:ArrayCollection;
+			[Bindable] public var selectPost:Post;
+			
+			protected function application1_creationCompleteHandler(event:FlexEvent):void
+			{
+				var call:AsyncToken = ActiveResource.findAll(Post);
+				call.addResponder(new AsyncResponder(resultHandler, faultHandler));				
+			}
+			
+			private function resultHandler(event:ResultEvent, token:Object=null):void
+			{
+				posts = event.result as ArrayCollection;
+				trace(posts);
+			}
+			
+			private function faultHandler(event:FaultEvent, token:Object=null):void
+			{
+				Alert.show(event.toString(), "Failed to load posts");				
+			}
+			
+		]]>
+	</fx:Script>
+	<s:DataGrid width="100%" height="100%" dataProvider="{posts}" >
+		<s:columns>
+			<s:ArrayList>
+				<s:GridColumn dataField="id"/>
+				<s:GridColumn dataField="title"/>
+				<s:GridColumn dataField="body"/>
+				<s:GridColumn dataField="created_at"/>
+			</s:ArrayList>
+		</s:columns>
+	</s:DataGrid>
+</s:Application>
