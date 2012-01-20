@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+        xmlns:s="library://ns.adobe.com/flex/spark" 
+        title="Red View"
+        backgroundColor="red">
+    <s:layout>
+      <s:VerticalLayout horizontalAlign="center" verticalAlign="middle" />
+    </s:layout>
+  <fx:Script>
+    <![CDATA[
+      import spark.transitions.ViewTransitionBase;
+      protected function showBlueClickHandler(event:MouseEvent):void
+      {
+        var data:Object = null;
+        var context:Object = null;
+        var viewTransition:ViewTransitionBase = null;
+        navigator.pushView(BlueView, data, context, viewTransition); // Last 3 are defaulted to null 
+      }
+    ]]>
+  </fx:Script>
+  
+  <s:Button label="Show Blue" click="showBlueClickHandler(event)"  visible="false" />
+</s:View>

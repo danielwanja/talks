@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+        xmlns:s="library://ns.adobe.com/flex/spark" title="Components">
+  <fx:Declarations>
+    <!-- Place non-visual elements (e.g., services, value objects) here -->
+  </fx:Declarations>
+  <s:CalloutButton id="callout" x="547" y="15" label="A Callout Button" 
+                   horizontalPosition="end" verticalPosition="after">
+    <s:calloutLayout>
+      <s:HorizontalLayout/> 
+   </s:calloutLayout>
+    <s:Button label="Start" click="busy.visible=true; callout.closeDropDown();" />
+    <s:Button label="Stop"  click="busy.visible=false;callout.closeDropDown();" />
+  </s:CalloutButton>
+  
+  <s:BusyIndicator id="busy" x="42" y="32"/>
+
+  <s:SpinnerListContainer x="42" y="100" width="200" height="200">
+    <s:SpinnerList id="spinnerList" height="100%" labelField="data" selectedIndex="1">
+      <s:ArrayList>
+        <fx:Object data="data1"></fx:Object>
+        <fx:Object data="data2"></fx:Object>
+        <fx:Object data="data3"></fx:Object>
+        <fx:Object data="data4"></fx:Object>
+        <fx:Object data="data5"></fx:Object>
+        <fx:Object data="data6"></fx:Object>
+        <fx:Object data="data7"></fx:Object>
+        <fx:Object data="data8"></fx:Object>
+        <fx:Object data="data9"></fx:Object>
+      </s:ArrayList>
+    </s:SpinnerList>
+  </s:SpinnerListContainer>
+  
+  <s:SpinnerListContainer top="350" left="100"> 
+    <s:SpinnerList typicalItem="100">
+      <s:dataProvider> 
+        <s:NumericDataProvider minimum="0" maximum="23" stepSize="1"/>
+      </s:dataProvider> 
+    </s:SpinnerList> 
+    <s:SpinnerList typicalItem="100">
+      <s:dataProvider> 
+        <s:NumericDataProvider minimum="0" maximum="59" stepSize="1"/>
+      </s:dataProvider> 
+    </s:SpinnerList> 
+    <s:SpinnerList typicalItem="100"
+                   dataProvider="{new ArrayList(['AM','PM'])}"
+                   wrapElements="false"/> 
+  </s:SpinnerListContainer>  
+  
+  <s:ButtonBar x="376" y="133"/>
+  <s:Image x="369" y="256"/>
+  <s:ToggleSwitch x="337" y="329"/>
+  <s:ToggleSwitch x="337" y="367"/>
+  <s:List x="488" y="133" width="186" height="276" 
+          dataProvider="{spinnerList.dataProvider}"
+          labelField="data"/>
+</s:View>
