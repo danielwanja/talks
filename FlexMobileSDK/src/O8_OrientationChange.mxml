@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+               xmlns:s="library://ns.adobe.com/flex/spark" applicationDPI="160"
+               resize="currentState = FlexGlobals.topLevelApplication.aspectRatio">
+  <fx:Script>
+      import mx.core.FlexGlobals;
+  </fx:Script>
+  <s:states>
+    <s:State name="portrait" />
+    <s:State name="landscape" />
+  </s:states>	
+  <s:layout>
+    <s:HorizontalLayout verticalAlign="middle" horizontalAlign="center" />
+  </s:layout>
+  <s:Label text.landscape="LANDSCAPE" text.portrait="PORTRAIT"  fontSize="120"/>
+</s:Application>

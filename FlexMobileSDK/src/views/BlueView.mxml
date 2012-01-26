@@ -17,5 +17,5 @@
     ]]>
   </fx:Script>
   
-  <s:Button label="Go Back" click="goBackClickHandler(event)" visible="true"  />  
+  <s:Button label="Go Back" click="goBackClickHandler(event)" visible="false"  />  
 </s:View>
