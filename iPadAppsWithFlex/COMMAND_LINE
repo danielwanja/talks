@@ -1,0 +1,19 @@
+Create, test, and deploy using the command line
+You can create a mobile application without Flash Builder. You use the mxmlc, adl, and adt command line tools 
+instead. 
+Here is the general process for developing and installing a mobile application on a device using command line tools. 
+Each of these steps is described in more detail later:
+1 Compile the application with the mxmlc tool.
+    mxmlc +configname=airmobile MyMobileApp.mxml
+This step requires that you pass the configname parameter set to “airmobile”.
+2 Test the application in AIR Debug Launcher (ADL) with the adl tool.
+    adl MyMobileApp-app.xml -profile mobileDevice
+This step requires that you create an application descriptor file and pass it as an argument to the adl tool. You also 
+specify the mobileDevice profile.
+3 Package the application using the adt tool.
+    adt -package -target apk SIGN_OPTIONS MyMobileApp.apk MyMobileApp-app.xml MyMobileApp.swf
+This step requires that you first create a certificate.
+4 Install the application on your mobile device. To install your application on an Android device, you use the adb tool.
+    adb install -r MyMobileApp.apk
+This step requires that you first connect your mobile device to your computer via USB.
+5 Deploy the mobile application to online stores

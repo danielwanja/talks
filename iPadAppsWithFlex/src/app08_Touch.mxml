@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This example is based on MultiTouch.mxml from TourDeMobile -->
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" applicationDPI="160">
+	<fx:Script>
+		import mx.core.UIComponent;
+		import spark.components.Label;
+		
+		private var circles:Object = new Object();
+	</fx:Script>	
+	<fx:Declarations>
+		<fx:Component className="Circle">
+			<s:Ellipse width="140" height="140">
+				<s:fill>
+					<s:SolidColor color="#ff0000"/>
+				</s:fill>
+			</s:Ellipse>
+		</fx:Component>
+	</fx:Declarations>	
+	<s:Group  width="100%" height="100%">
+		<s:touchBegin>
+			<![CDATA[
+			var c:Circle = new Circle();
+			c.x = event.localX - 70;
+			c.y = event.localY - 70;
+			addElement(c);
+			circles[event.touchPointID] = c;
+			]]>
+		</s:touchBegin>
+		<s:touchMove>
+			<![CDATA[
+			if (circles[event.touchPointID] != null)
+			{
+				circles[event.touchPointID].x = event.localX - 70;
+				circles[event.touchPointID].y = event.localY - 70;
+			}				
+			]]>
+		</s:touchMove>
+		<s:touchEnd>
+			<![CDATA[
+			if (circles[event.touchPointID] != null)
+			{
+				removeElement(circles[event.touchPointID]);
+				delete circles[event.touchPointID];
+			}				
+			]]>
+		</s:touchEnd>
+		<s:touchOut>
+			<![CDATA[
+			if (circles[event.touchPointID] != null)
+			{
+				removeElement(circles[event.touchPointID]);
+				delete circles[event.touchPointID];
+			}				
+			]]>
+		</s:touchOut>
+		<s:creationComplete>
+			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
+			
+			if (Multitouch.supportsTouchEvents) {
+				l.text = "maxTouchPoints = " + Multitouch.maxTouchPoints;
+			} else {
+				l.text = "MultiTouch is not supported on this device";
+			}
+		</s:creationComplete>
+		
+		<s:Label id="l" paddingTop="10"/>
+	</s:Group>
+</s:Application>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" title="RealTimeChartView" xmlns:component="component.*">
+	<s:layout>
+		<s:VerticalLayout />
+	</s:layout>
+	<fx:Declarations>
+	<s:HTTPService id="yahoo" url="http://ichart.finance.yahoo.com/table.csv?s={stock.text}" />
+</fx:Declarations>	
+<fx:Script>
+	<![CDATA[
+		import mx.collections.ArrayCollection;
+		import mx.rpc.AsyncResponder;
+		import mx.rpc.events.ResultEvent;
+		private var appl:ArrayCollection = new ArrayCollection(
+			[614.48,606.98,596.05,599.34,602.50,605.96,601.10,585.57,585.56,589.58,568.10,552.00,545.17,541.99,530.69,530.26,533.16,545.18,544.47,542.44,
+				535.41,525.76,522.41,516.39,513.04,514.85,502.12,502.21,497.67,509.46,502.60,493.42,493.17,476.68,468.83,463.97,459.68,455.12,456.19,456.48,
+				453.01,447.28,444.63,446.66,420.41,427.41,420.30,427.75,429.11,424.70,419.81,421.39,422.55,423.24,421.73,422.40,418.03,413.44,411.23].reverse()
+			);
+		
+		protected function stock_keyUpHandler(event:KeyboardEvent):void
+		{
+			if (event.keyCode!=Keyboard.ENTER) return;
+			yahoo.send().addResponder(new AsyncResponder(parseHistory, faultHandler));
+		}		
+		
+		private function parseHistory(event:ResultEvent, token:Object=null):void
+		{
+			var csv:String = event.result as String;
+			var rows:Array = csv.split("\n");
+			var last:Number = rows[0].split(",").length-1;
+			rows.shift(); // remove name row
+			var history:Array = [];
+			for each (var row:String in rows) {
+				history.push(row.split(",")[last])
+			}
+			chart.setHistory(new ArrayCollection(history.reverse()));
+		}
+		
+		private function faultHandler():void
+		{
+			stock.text = "";
+		}
+		
+	]]>
+</fx:Script>	
+	<s:HGroup>
+		<s:TextInput id="stock" prompt="Enter stock symbol and press enter" 
+					 keyUp="stock_keyUpHandler(event)"/>
+	</s:HGroup>
+	<component:RealTimeChart  id="chart" width="100%" height="100%" />
+	
+</s:View>
