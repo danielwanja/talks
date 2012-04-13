@@ -1,11 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
-			   xmlns:s="library://ns.adobe.com/flex/spark" applicationDPI="160">
+			   xmlns:s="library://ns.adobe.com/flex/spark" applicationDPI="160"
+			   resizeForSoftKeyboard="{resizeScreen.selected}">
+	<fx:Style>
+		@namespace s "library://ns.adobe.com/flex/spark";
+		s|TextInput {
+			fontSize: 32;
+		}
+	</fx:Style>
 	<s:layout>
-		<s:VerticalLayout />
+		<s:HorizontalLayout  paddingTop="8" />
 	</s:layout>
-	<s:TextInput prompt="text" />
-	<s:TextInput prompt="number" />
-	<s:TextInput prompt="email" />
-	<s:TextInput prompt="url" />
+	<s:BorderContainer width="250" height="100%" backgroundColor="0xCCCCCC">
+		<s:layout>
+			<s:HorizontalLayout verticalAlign="bottom" />
+		</s:layout>
+		<s:Label text="Resize Screen" />
+		<s:ToggleSwitch id="resizeScreen"/>		
+	</s:BorderContainer>
+	<s:VGroup width="100%" height="100%">
+		<s:TextInput prompt="contact" 		softKeyboardType="contact"/>
+		<s:TextInput prompt="default" 		softKeyboardType="default" />
+		<s:TextInput prompt="email" 		softKeyboardType="email"/>
+		<s:TextInput prompt="number" 		softKeyboardType="number"/>
+		<s:TextInput prompt="punctuation" 	softKeyboardType="punctuation"/>
+	</s:VGroup>
 </s:Application>

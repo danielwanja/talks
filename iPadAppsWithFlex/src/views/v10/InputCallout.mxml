@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Callout xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		   xmlns:s="library://ns.adobe.com/flex/spark"
+		   moveForSoftKeyboard="true"
+		   horizontalPosition="middle" verticalPosition="before">
+	<s:layout>
+		<s:VerticalLayout/>		
+	</s:layout>
+	<s:TextInput prompt="contact" 		softKeyboardType="contact"/>
+	<s:TextInput prompt="default" 		softKeyboardType="default" />
+	<s:TextInput prompt="email" 		softKeyboardType="email"/>
+	<s:TextInput prompt="number" 		softKeyboardType="number"/>
+	<s:TextInput prompt="punctuation" 	softKeyboardType="punctuation"/>	
+</s:Callout>

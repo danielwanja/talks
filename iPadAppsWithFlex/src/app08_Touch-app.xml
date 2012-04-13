@@ -15,7 +15,7 @@
 
 	<!-- A universally unique application identifier. Must be unique across all AIR applications.
 	Using a reverse DNS-style name as the id is recommended. (Eg. com.example.ExampleApplication.) Required. -->
-	<id>app08.Touch</id>
+	<id>com.n-so.app08.Touch</id>
 
 	<!-- Used as the filename for the application. Required. -->
 	<filename>app08_Touch</filename>
@@ -46,7 +46,7 @@
 	<initialWindow>
 		<!-- The main SWF or HTML file of the application. Required. -->
 		<!-- Note: In Flash Builder, the SWF reference is set automatically. -->
-		<content>[This value will be overwritten by Flash Builder in the output app.xml]</content>
+		<content>app08_Touch.swf</content>
 		
 		<!-- The title of the main window. Optional. -->
 		<!-- <title></title> -->

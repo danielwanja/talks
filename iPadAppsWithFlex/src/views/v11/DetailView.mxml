@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" title="{data.name}">
+	<fx:Script>
+		<![CDATA[
+			import spark.components.supportClasses.ViewReturnObject;
+		]]>
+	</fx:Script>
+	<s:navigationContent>
+		<s:Button label="Back" click="navigator.popView()" />		
+	</s:navigationContent>
+	<s:add>
+		<![CDATA[
+			var returnedObject:ViewReturnObject = navigator.poppedViewReturnedObject;
+			if (returnedObject&&returnedObject.object) {
+				data.software = returnedObject.object;
+				img.source = data.software.icon;
+			}
+		]]>
+	</s:add>
+<s:Form>
+	<s:FormItem label="Twitter">
+		<s:TextInput text="@{data.thandle}" />
+	</s:FormItem>
+	<s:FormItem label="Name">
+		<s:TextInput text="@{data.name}" />
+	</s:FormItem>
+	<s:FormItem label="Location">
+		<s:TextInput text="@{data.location}" />
+	</s:FormItem>
+	<s:FormItem label="Preferred Software">
+		<s:layout><s:HorizontalLayout /></s:layout>
+		<s:Image id="img" source="{data.software.icon}" />
+		<s:Button label="Change" click="navigator.pushView(SelectView, null, 'select_software')" />
+	</s:FormItem>
+</s:Form>
+
+</s:View>
