@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
-<application xmlns="http://ns.adobe.com/air/application/3.1">
+<application xmlns="http://ns.adobe.com/air/application/3.3">
 
 <!-- Adobe AIR Application Descriptor File Template.
 
 	Specifies parameters for identifying, installing, and launching AIR applications.
 
-	xmlns - The Adobe AIR namespace: http://ns.adobe.com/air/application/3.1
+	xmlns - The Adobe AIR namespace: http://ns.adobe.com/air/application/3.3
 			The last segment of the namespace specifies the version 
 			of the AIR runtime required for this application to run.
 			
@@ -15,7 +15,7 @@
 
 	<!-- A universally unique application identifier. Must be unique across all AIR applications.
 	Using a reverse DNS-style name as the id is recommended. (Eg. com.example.ExampleApplication.) Required. -->
-	<id>FlexTraining</id>
+	<id>app01.ViewNavigatorApp</id>
 
 	<!-- Used as the filename for the application. Required. -->
 	<filename>FlexTraining</filename>

@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
-<application xmlns="http://ns.adobe.com/air/application/3.1">
+<application xmlns="http://ns.adobe.com/air/application/3.3">
 
-<!-- Adobe AIR Application Descriptor File Template.
-
-	Specifies parameters for identifying, installing, and launching AIR applications.
-
-	xmlns - The Adobe AIR namespace: http://ns.adobe.com/air/application/3.1
-			The last segment of the namespace specifies the version 
-			of the AIR runtime required for this application to run.
-			
-	minimumPatchLevel - The minimum patch level of the AIR runtime required to run 
-			the application. Optional.
--->
+	<!-- Adobe AIR Application Descriptor File Template. Specifies parameters 
+		for identifying, installing, and launching AIR applications. xmlns - The 
+		Adobe AIR namespace: http://ns.adobe.com/air/application/3.3 The last segment 
+		of the namespace specifies the version of the AIR runtime required for this 
+		application to run. minimumPatchLevel - The minimum patch level of the AIR 
+		runtime required to run the application. Optional. -->
 
 	<!-- A universally unique application identifier. Must be unique across all AIR applications.
 	Using a reverse DNS-style name as the id is recommended. (Eg. com.example.ExampleApplication.) Required. -->
@@ -46,7 +41,7 @@
 	<initialWindow>
 		<!-- The main SWF or HTML file of the application. Required. -->
 		<!-- Note: In Flash Builder, the SWF reference is set automatically. -->
-		<content>[This value will be overwritten by Flash Builder in the output app.xml]</content>
+		<content>app00_BlankApp.swf</content>
 		
 		<!-- The title of the main window. Optional. -->
 		<!-- <title></title> -->
