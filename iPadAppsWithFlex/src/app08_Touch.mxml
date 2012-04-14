@@ -7,7 +7,7 @@
 		
 		import spark.components.Label;
 		
-		private var circles:Object = new Object();
+		private var circles:Object = {};
 	</fx:Script>	
 	<fx:Declarations>
 		<fx:Component className="Circle">

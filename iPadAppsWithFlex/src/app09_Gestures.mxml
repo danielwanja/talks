@@ -3,50 +3,33 @@
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
 			   xmlns:s="library://ns.adobe.com/flex/spark" applicationDPI="160"
 			   xmlns:views="views.*">
-
-<!--		<s:gesturePan>
-			<![CDATA[
-			gesture = "pan";
-			]]>
-		</s:gesturePan>
-		<s:gesturePressAndTap>
-			<![CDATA[
-			gesture = "press and tap";
-			]]>
-		</s:gesturePressAndTap>
-		<s:gestureRotate>
-			<![CDATA[
-			gesture = "rotate";
-			]]>
-		</s:gestureRotate>
-		<s:gestureSwipe>
-			<![CDATA[
-			gesture = "swipe ";				
-			]]>
-		</s:gestureSwipe>
-		<s:gestureTwoFingerTap>
-			<![CDATA[
-			gesture = "two finger tap";				
-			]]>
-		</s:gestureTwoFingerTap>-->
-<!--		<s:gestureZoom>
-			<![CDATA[
-			gesture = "zoom";
-			img.transformAround(new Vector3D(event.localX, event.localY, 0), new Vector3D(img.scaleX * event.scaleX, img.scaleY * event.scaleY, 0));
-			]]>
-		</s:gestureZoom>-->
-	<s:Group width="100%" height="100%">
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+		]]>
+	</fx:Script>
+	<s:Group width="100%" height="100%" top="25">
 		<s:gesturePan>
+			if (gestureType.selectedItem != 'Pan') return;
 			img.x += event.offsetX;
 			img.y += event.offsetY;				
 		</s:gesturePan>
 		<s:gestureZoom>
+			if (gestureType.selectedItem != 'Zoom') return;
 			img.transformAround(new Vector3D(event.localX, event.localY, 0), // transformCenter
-								new Vector3D(img.scaleX * event.scaleX, img.scaleY * event.scaleY, 0) // scale
+								new Vector3D(img.scaleX * event.scaleX, 
+											 img.scaleY * event.scaleY, 0) // scale
 								);
 		</s:gestureZoom>
-		<s:Image id="img" source="@Embed('/assets/apacheflex_fc.jpg')"/>
+		<s:gestureRotate>
+			if (gestureType.selectedItem != 'Rotate') return;
+			img.transformAround(new Vector3D(img.width/2, img.height/2, 0), 
+								null, 
+								new Vector3D(0, 0, img.rotationZ + event.rotation));				
+		</s:gestureRotate>
+		<s:Image id="img" source="@Embed('/assets/apacheflex_fc.jpg')" />
 	</s:Group>
-
-<!--	<views:GestureZoom />-->
+	<s:ButtonBar id="gestureType"  dataProvider="{new ArrayCollection(['Pan', 'Zoom', 'Rotate'])}" 
+				 requireSelection="true" selectedIndex="0"
+				 horizontalCenter="0"/>	
 </s:Application>
