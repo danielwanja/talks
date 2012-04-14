@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" applicationDPI="160">
+	<s:layout>
+		<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" />
+	</s:layout>
+	
+	<fx:Declarations>
+		<fx:Component className="CustomIconItemRenderer">
+			<s:IconItemRenderer labelField="" iconField="icon"/>
+		</fx:Component>		
+	</fx:Declarations>
+	<s:SpinnerListContainer>
+		<s:SpinnerList width="90" dataProvider="{iconList}" selectedIndex="0" 
+					   itemRenderer="CustomIconItemRenderer" />
+		<s:SpinnerList width="90" dataProvider="{iconList}" selectedIndex="2" 
+					   itemRenderer="CustomIconItemRenderer" />
+		<s:SpinnerList width="90" dataProvider="{iconList}" selectedIndex="1" 
+					   itemRenderer="CustomIconItemRenderer" />
+	</s:SpinnerListContainer>
+	
+	<fx:Declarations>
+		<s:ArrayCollection id="iconList">
+			<fx:Object icon="@Embed('/assets/icons/spinner/flex_50x50.gif')" />
+			<fx:Object icon="@Embed('/assets/icons/spinner/acrobat_50x50.gif')" />
+			<fx:Object icon="@Embed('/assets/icons/spinner/flash-builder-48x48.png')" />
+			<fx:Object icon="@Embed('/assets/icons/spinner/flash_50x50.gif')" />
+			<fx:Object icon="@Embed('/assets/icons/spinner/flash_player_50x50.gif')" />
+			<fx:Object icon="@Embed('/assets/icons/spinner/photoshop_50x50.gif')" />
+		</s:ArrayCollection>		
+	</fx:Declarations>	
+</s:Application>
