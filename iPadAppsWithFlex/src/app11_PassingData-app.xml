@@ -15,7 +15,7 @@
 
 	<!-- A universally unique application identifier. Must be unique across all AIR applications.
 	Using a reverse DNS-style name as the id is recommended. (Eg. com.example.ExampleApplication.) Required. -->
-	<id>app11.PassingData</id>
+	<id>com.n-so.app11.PassingData</id>
 
 	<!-- Used as the filename for the application. Required. -->
 	<filename>app11_PassingData</filename>
