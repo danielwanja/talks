@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" applicationDPI="160">
+	<s:applicationComplete>
+		<![CDATA[
+		webView = new StageWebView();
+		webView.stage = this.stage;		
+		resizeWebView();
+		webView.loadURL("http://google.com");	
+		]]>
+	</s:applicationComplete>
+	<s:resize>
+		<![CDATA[
+		resizeWebView();	
+		]]>
+	</s:resize>
+	<s:remove>
+		<![CDATA[
+		var webView:StageWebView = this.webView;
+		this.webView = null;				
+		webView.dispose();			
+		]]>
+	</s:remove>
+	<fx:Script>
+			private var webView:StageWebView;
+		
+		protected function resizeWebView():void {
+			if (webView==null) return;
+			var p:Point = new Point(0, 0);
+			p = this.localToGlobal(p);
+			webView.viewPort = new Rectangle(p.x, p.y, this.width, this.height);				
+		}		
+	</fx:Script>	
+</s:Application>

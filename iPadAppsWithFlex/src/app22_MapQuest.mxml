@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" applicationDPI="160"
+			   xmlns:tilemap="com.mapquest.tilemap.*"
+			   creationComplete="application1_creationCompleteHandler(event)">
+	<fx:Script>
+		<![CDATA[
+			import com.mapquest.LatLng;
+			import com.mapquest.services.geocode.Geocoder;
+			import com.mapquest.services.geocode.GeocoderEvent;
+			import com.mapquest.services.geocode.GeocoderLocation;
+			import com.mapquest.services.geocode.GeocoderResponse;
+			import com.mapquest.tilemap.controls.inputdevice.MouseWheelZoomControl;
+			import com.mapquest.tilemap.controls.shadymeadow.SMLargeZoomControl;
+			import com.mapquest.tilemap.controls.shadymeadow.SMViewControl;
+			
+			import mx.collections.ArrayCollection;
+			import mx.events.FlexEvent;
+			
+			private var geocoder:Geocoder;
+			private var location:GeocoderLocation;
+			[Bindable] private var locations:ArrayCollection;
+			
+			protected function application1_creationCompleteHandler(event:FlexEvent):void
+			{
+				geocoder = new Geocoder(map.tileMap);
+				
+				map.addControl(new SMLargeZoomControl());
+				map.addControl(new SMViewControl());
+				map.addControl(new MouseWheelZoomControl());
+				
+				//set map center and zoom level
+				map.setCenter(new LatLng(38.895,-77.036), 20);
+				
+				this.location = new GeocoderLocation();
+				
+				//add listeners to handle responses
+				geocoder.addEventListener(GeocoderEvent.GEOCODE_RESPONSE, this.onGeocodeResponse);
+				geocoder.addEventListener(GeocoderEvent.GEOCODE_ERROR_EVENT, this.onGeocodeError);
+				geocoder.addEventListener(GeocoderEvent.HTTP_ERROR_EVENT, this.onHttpError);	
+				findAddresses();
+			}
+			
+			protected function findAddresses():void {
+				
+				//clean the map
+				map.removeShapes();
+				locations = new ArrayCollection();
+				
+				//call the geocoder object's geocode method, passing the address
+				this.geocoder.geocode("Apple Store Aspen Grove, South Santa Fe Drive, Littleton, CO");	
+				this.geocoder.geocode("10345 Park Meadows Drive, Lone Tree, CO");
+			}
+			
+			protected function onGeocodeResponse(event:GeocoderEvent):void
+			{
+				for each (var location:GeocoderLocation in event.geocoderResponse.locations) {
+					locations.addItem(location);
+				}
+			}
+			
+			protected function onGeocodeError(event:GeocoderEvent):void
+			{
+				trace(event);				
+			}
+			
+			protected function onHttpError(event:GeocoderEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+			}
+			
+		]]>
+	</fx:Script>
+	<s:layout>
+		<s:VerticalLayout />
+	</s:layout>
+	<tilemap:TilemapComponent id="map" width="100%" height="100%"  key="Fmjtd%7Cluu2n1urnl%2C8s%3Do5-hw70u" zoom="4"/>
+	<s:DataGrid width="100%" height="100%" dataProvider="{locations}" />
+</s:Application>

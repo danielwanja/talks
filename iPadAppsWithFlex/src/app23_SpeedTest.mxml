@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"			   
+			   applicationDPI="160"			   
+			   xmlns:components="com.betterthantomorrow.components.*"
+			   color="#FEFEFE" backgroundColor="#5A86D7"
+			   creationComplete="application1_creationCompleteHandler(event)">
+	<s:layout>
+		<s:VerticalLayout  />
+	</s:layout>
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.events.FlexEvent;
+			
+			import spark.events.TextOperationEvent;
+			
+			import views.v23.ByteSizes;
+			import views.v23.SpeedRun;
+			
+			private var size:ByteSizes;
+			private var run:SpeedRun;
+			[Bindable] private var serie:ArrayCollection;
+			[Bindable] private var rpm:Number=0;
+			
+			protected function application1_creationCompleteHandler(event:FlexEvent):void
+			{
+				gauge.setStyle("alertRatios", [55, 110]);
+				
+			}
+			
+			private function resultHandler(success:Boolean):void
+			{
+				rpm = run.rpm
+				serie.addItem({rpm:rpm, response_time:run.last_response_time});
+				if (run.complete) {
+					startStopButton.label = "Start";
+				}
+				var msg:Array = [
+					formatter2.format(rpm)+" rpm",
+					formatter2.format(rpm/60) + " rps",
+					run.last_response_time + " millis."
+				]
+				description.text = msg.join("\n");
+			}
+			
+			protected function bytes_changeHandler(event:Event):void
+			{
+				if (run) run.setByteSize(ByteSizes.sizes[bytes.value].bytes);
+				
+			}
+			
+			protected function serverUrl_changeHandler(event:TextOperationEvent):void
+			{
+				if (run) run.url = serverUrl.text;				
+			}
+			
+			protected function startStop_clickHandler(event:MouseEvent):void
+			{
+				if (run==null||run.complete) {
+					serie = new ArrayCollection;
+					run = new SpeedRun(ByteSizes.sizes[bytes.value].bytes, 5*60, 1000);
+					run.url = serverUrl.text;
+					run.setResultCallBackHandler(resultHandler);
+					run.start();
+					uuidField.text = "UUID: "+run.uuid;
+					startStopButton.label = "Stop";
+				} else {
+					run.stop();
+					startStopButton.label = "Start";
+				}
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<s:NumberFormatter id="numberFormatter" />
+		<mx:NumberFormatter precision="1" id="formatter" rounding="nearest"/>
+		<mx:NumberFormatter precision="2" id="formatter2" rounding="nearest"/>
+	</fx:Declarations>
+	<s:Spacer height="3" />
+	<s:Group width="100%" height="45" clipAndEnableScrolling="true" >
+		<s:RichText x="422" right="8" width="264" color="#FFFFFF" fontFamily="Arial" fontSize="36"
+					fontStyle="italic" kerning="on" tabStops="S0 S50 S100 S150"
+					text="SpeedTest v1.0">
+			<s:filters>
+				<s:GlowFilter alpha="1.0" blurX="6.0" blurY="6.0" color="#B3FFC4" inner="false"
+							  knockout="false" quality="2" strength="1"/>
+				<s:BevelFilter angle="45.0" blurX="4.0" blurY="4.0" distance="4.0"
+							   highlightAlpha="1.0" highlightColor="#FFFFFF" knockout="false"
+							   quality="2" shadowAlpha="1.0" shadowColor="#00FFFF" strength="1"
+							   type="inner"/>
+			</s:filters>
+		</s:RichText>
+	</s:Group>
+	<s:HGroup width="100%">
+		<s:TextInput id="serverUrl" width="100%" change="serverUrl_changeHandler(event)"
+					 color="black" text="http://flexspeedtest.heroku.com"/>
+		<s:Button id="startStopButton" label="Start" click="startStop_clickHandler(event)" />
+	</s:HGroup>
+	<s:HGroup width="100%">
+		<s:VGroup width="50%">
+			<s:Label id="uuidField" text="UUID:" />
+			<s:VGroup width="100%">
+				<s:VGroup id="sizeControls" width="100%" >
+					<s:HSlider id="bytes" minimum="0" maximum="4"  change="bytes_changeHandler(event)" />
+					<s:Label text="{ByteSizes.sizes[bytes.value].label} - {numberFormatter.format(ByteSizes.sizes[bytes.value].bytes)} bytes"/>			
+				</s:VGroup>
+			</s:VGroup>
+		</s:VGroup>
+		<s:HGroup width="50%">
+			<!--<s:Label id="output" fontSize="120" text="{rpm}" />-->
+			<components:Gauge id="gauge" 
+							  diameter="200" width="200"  
+							  verticalCenter="0" horizontalCenter="0"
+							  minValue="0"  maxValue="220" value="{rpm}" valueFormatter="{formatter}"
+							  bigTicks="9" smallTicks="45" showMinMax="true" showValue="true" />
+			<s:VGroup width="100%"  height="100%"  paddingLeft="5" horizontalAlign="center">
+				<s:RichEditableText id="description" fontSize="48" />
+			</s:VGroup>
+		</s:HGroup>
+	</s:HGroup>
+	
+	<s:Group width="100%" height="100%">
+		<s:BorderContainer  top="10" bottom="10" left="10" right="10" backgroundColor="black" backgroundAlpha="0.75">
+			<s:layout>
+				<s:VerticalLayout paddingLeft="10" paddingRight="10" paddingTop="10" />
+			</s:layout>
+			
+			<mx:LineChart id="chart" dataProvider="{serie}" showDataTips="true" height="200" width="100%"  fontSize="14"
+						  seriesFilters="[]">
+				
+				<mx:verticalAxis>
+					<mx:LinearAxis id="vAxis"/>
+				</mx:verticalAxis>
+				
+				<mx:series>
+					<mx:LineSeries yField="rpm">
+						<mx:fill>
+							<s:SolidColor color="#FF0000"/>
+						</mx:fill>
+					</mx:LineSeries>
+				</mx:series>
+				
+			</mx:LineChart>
+			
+			<mx:ColumnChart  id="chart2" dataProvider="{serie}" showDataTips="true" height="200" width="100%" fontSize="14"
+							 seriesFilters="[]">
+				
+				<mx:verticalAxis>
+					<mx:LinearAxis id="vAxis2"/>
+				</mx:verticalAxis>
+				
+				<mx:series>
+					
+					<mx:ColumnSeries yField="response_time" />
+				</mx:series>		
+				
+			</mx:ColumnChart>		
+		</s:BorderContainer>	   
+	</s:Group>
+	
+	
+	<s:Label width="100%" fontSize="12" fontStyle="italic"
+			 text="Gauge: Requests Per Minute, Top chart: Requests Per Minute, Bottom Chart: Request time"
+			 textAlign="center"/>
+	
+</s:Application>

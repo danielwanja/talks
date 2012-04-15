@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" applicationDPI="160">
+	<s:layout>
+		<s:HorizontalLayout />		
+	</s:layout>
+	<fx:Declarations>
+		<s:ArrayCollection id="data">
+			<fx:Object thandle="cote" name="cote" location="Austin, Texas" photo="@Embed('/assets/icons/cote-pachas-hirez-small_reasonably_small.jpg')"/>
+			<fx:Object thandle="CharlieCollins" name="Charlie Collins" location="Atlanta, GA, US" photo="@Embed('/assets/icons/ch5_reasonably_small.jpg')"/>
+			<fx:Object thandle="peterelst" name="Peter Elst" location="Belgium / India" photo="@Embed('/assets/icons/peter-headshot_reasonably_small.jpg')"/>
+			<fx:Object thandle="flex_dennis" name="Dennis Plucinik" location="New York, NY" photo="@Embed('/assets/icons/Fx_reasonably_small.png')"/>
+			<fx:Object thandle="marty_pitt" name="Marty Pitt" location="London" photo="@Embed('/assets/icons/ProfilePic_reasonably_small.png')"/>
+			<fx:Object thandle="JosephLabrecque" name="Joseph Labrecque" location="Denver, CO" photo="@Embed('/assets/icons/Joseph_0610_250sq_reasonably_small.jpg')"/>
+			<fx:Object thandle="Han_Cholo" name="Andrew Rubalcaba" location="DFW,TX" photo="@Embed('/assets/icons/marcoerikestrada3wb_reasonably_small.jpg')"/>
+			<fx:Object thandle="jnack" name="John Nack" location="San Jose, CA" photo="@Embed('/assets/icons/jn_twitter_reasonably_small.jpg')"/>
+			<fx:Object thandle="EladElrom" name="Elad Elrom" location="Manhattan" photo="@Embed('/assets/icons/twitterProfilePhoto_reasonably_small.jpg')"/>
+			<fx:Object thandle="danielwanja" name="Daniel Wanja" location="Denver, CO" photo="@Embed('/assets/icons/danielwanja_reasonably_small.jpg')"/>
+		</s:ArrayCollection>	
+	</fx:Declarations>	
+	
+	<s:List width="100%" dataProvider="{data}" labelField="name"  height="100%"/>
+	
+	<s:List width="100%" dataProvider="{data}"  height="100%">
+		<s:itemRenderer>
+			<fx:Component>
+				<s:IconItemRenderer height="120" labelField="name" 
+									iconField="photo" iconHeight="100" iconWidth="100" 
+									messageFunction="getMessage" 
+									decorator="@Embed('/assets/icons/twitter_icon_50.png')">
+					<fx:Script>
+						protected function getMessage(o:Object):String { return "@" + o.thandle + " " + o.location; }
+					</fx:Script>
+				</s:IconItemRenderer>
+			</fx:Component>
+		</s:itemRenderer>	
+	</s:List>
+		
+	<s:List width="100%" dataProvider="{data}"  height="100%">
+		<s:itemRenderer>
+			<fx:Component>
+				<s:ItemRenderer>
+					<s:BitmapImage source="assets/paper.png" width="248" height="93"/>
+					
+					<s:Ellipse x="203.5" y="90.5" width="22" height="22">
+						<s:stroke>
+							<s:SolidColorStroke caps="none" color="#5C5C5C" joints="miter" miterLimit="4"
+												weight="1"/>
+						</s:stroke>
+						<s:fill>
+							<s:SolidColor color="#FF6357"/>
+						</s:fill>
+					</s:Ellipse>
+					<s:RichText x="211" y="97" color="#464646" fontFamily="Arial" fontSize="12" tabStops="S0 S50"
+								text="{itemIndex+1}"/>	
+					
+					<s:RichText left="10" top="10" width="230" height="116" color="black" fontFamily="Arial"
+								fontSize="11" text="{data.name+'\n@'+ data.thandle + ' ' + data.location}"/>
+					<s:mask>
+						<s:Graphic id="rect" maskType="alpha" cacheAsBitmap="true" >
+							<s:Rect width="230" height="116" radiusX="10" radiusY="10">
+								<s:fill>
+									<s:SolidColor color="0xDDAAAA" />
+								</s:fill>
+							</s:Rect>
+						</s:Graphic>
+					</s:mask>
+					
+					<s:filters>
+						<s:DropShadowFilter  />
+					</s:filters>			
+				</s:ItemRenderer>					
+			</fx:Component>
+		</s:itemRenderer>
+	</s:List>		
+<fx:Script>
+	<![CDATA[
+		
+	]]>
+</fx:Script>
+</s:Application>

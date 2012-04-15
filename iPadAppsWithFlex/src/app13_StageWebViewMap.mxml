@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" applicationDPI="160">
+	<s:applicationComplete>
+		<![CDATA[
+		webView = new StageWebView();
+		webView.stage = this.stage;		
+		var url:String = googleUrl(["Apple Store Denver", "360Flex Denver"]);
+		resizeWebView();
+		webView.loadURL(url);	
+		]]>
+	</s:applicationComplete>
+	<s:resize>
+		<![CDATA[
+		resizeWebView();	
+		]]>
+	</s:resize>
+	<s:remove>
+		<![CDATA[
+		var webView:StageWebView = this.webView;
+		this.webView = null;				
+		webView.dispose();			
+		]]>
+	</s:remove>
+	<fx:Script>
+		<![CDATA[
+			private var webView:StageWebView;
+			
+			protected function resizeWebView():void {
+				if (webView==null) return;
+				var p:Point = new Point(0, 0);
+				p = this.localToGlobal(p);
+				webView.viewPort = new Rectangle(p.x, p.y, this.width, this.height);				
+			}
+			protected function googleUrl(locations:Array):String {
+				var markers:Array = [];
+				for (var i:int = 0; i < locations.length; i++) 
+				{
+					var address:String = locations[i];
+					var marker:String = "markers=color:red|label:"+(i+1)+"|"+encodeURIComponent(address); 
+					markers.push(marker);
+				}		
+				var url:String = "http://maps.googleapis.com/maps/api/staticmap?" 
+					+ markers.join("&")
+					+   "&maptype=roadmap" 
+					+   "&sensor=false"
+					+   "&size="+this.width+"x"+this.height;
+				return url;
+			}
+		]]>
+	</fx:Script>	
+</s:Application>
