@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+	Image: "the last photo of the eiffel tower.jpg" from Tray Ratcliff (Creative Commons, Non-Commercial) from http://www.stuckincustoms.com/
+-->
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" applicationDPI="160">
+	<s:Scroller width="100%" height="100%">
+		<s:Group>
+			<s:Image source="@Embed('/assets/the_last_photo_of_the_eiffel_tower.jpg')" 
+					 width="5480" height="3596" />
+		</s:Group>		
+	</s:Scroller>
+</s:Application>
