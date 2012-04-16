@@ -73,9 +73,5 @@
 			</fx:Component>
 		</s:itemRenderer>
 	</s:List>		
-<fx:Script>
-	<![CDATA[
-		
-	]]>
-</fx:Script>
+
 </s:Application>
