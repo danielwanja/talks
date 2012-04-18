@@ -1,19 +1,15 @@
 # Daniel Wanja's Talks
 
-A bunch of my talks on Ruby on Rails and related matters.
+A bunch of my talks on Ruby on Rails, Flex and related matters.
 
-## In progress
 
-### Flex Mobile SDK
+### iPadAppsWithFlex
 
-This is a talk I will give at a customer site and at a local user group that shows how easy it is to build Flex mobile apps.
-
-## Talks
+I gave this talk at the Denver 360Flex 2012 Conference on 'Building iPad Apps with Flex'. You can find a record of the talk on my blog at http://n-so.com/blog/2012/04/18/screencast-building-ipad-apps-with-flex
 
 ### Flex with Ruby on Rails
 
-I will gabe this talk at the AdobeMax 360 Unconference on Wednesday October 5th 2011. For more information see http://www.360flex.com/about/360max/. This talk was originally scheduled for the Flex track at Adobe Max, but was
-then "promoted" to the 360Flex unconference as the topic is more specialized https://max.adobe.com/schedule/by-session/flex-ruby-on-rails-and-the-cloud/S3441. 
+I gave this talk at the AdobeMax 360 Unconference on Wednesday October 5th 2011. This talk was originally scheduled for the Flex track at Adobe Max, but was then "promoted" to the 360Flex unconference as the topic was too specialized.
 
 You can find a recording of a preview I gave of this talk at http://n-so.com/screencasts.html, see screencast #9 Flex With Ruby on Rails talk - An AdobeMax preview
 
