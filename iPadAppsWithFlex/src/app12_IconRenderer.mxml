@@ -40,7 +40,7 @@
 		<s:itemRenderer>
 			<fx:Component>
 				<s:ItemRenderer>
-					<s:BitmapImage source="assets/paper.png" width="248" height="93"/>
+					<s:BitmapImage source="@Embed('/assets/paper.png')" width="248" height="93"/>
 					
 					<s:Ellipse x="203.5" y="90.5" width="22" height="22">
 						<s:stroke>
